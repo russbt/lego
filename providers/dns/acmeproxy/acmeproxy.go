@@ -16,7 +16,6 @@ import (
 // Config is used to configure the creation of the DNSProvider
 type Config struct {
 	BaseURL            string
-	Provider           string
 	PropagationTimeout time.Duration
 	PollingInterval    time.Duration
 }
