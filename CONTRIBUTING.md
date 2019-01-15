@@ -31,6 +31,50 @@ a lot of time on something the project's developers might not want to merge into
 **IMPORTANT**: By submitting a patch, you agree to allow the project
 owners to license your work under the terms of the [MIT License](LICENSE).
 
+### How to create a pull request
+
+First, you have to install [GoLang](https://golang.org/doc/install) and [golangci-lint](https://github.com/golangci/golangci-lint#install).
+
+```bash
+# Create the root folder
+mkdir -p $GOPATH/src/github.com/xenolf
+cd $GOPATH/src/github.com/xenolf
+
+# clone your fork
+git clone git@github.com:YOUR_USERNAME/lego.git
+cd lego
+
+# Add the xenolf/lego remote
+git remote add upstream git@github.com:xenolf/lego.git
+git fetch upstream
+```
+
+```bash
+# Create your branch
+git checkout -b my-feature
+
+## Create your code ##
+```
+
+```bash
+# Format
+make fmt
+# Linters
+make checks
+# Tests
+make test
+# Compile
+make build
+```
+
+```bash
+# push your branch
+git push -u origin my-feature
+
+## create a pull request on Github ##
+```
+
+
 ## DNS Providers: API references
 
 | DNS provider              | Code           | Documentation                                                                                                | Go client                                                         |
@@ -67,6 +111,7 @@ owners to license your work under the terms of the [MIT License](LICENSE).
 | Namecheap                 | `namecheap`    | [documentation](https://www.namecheap.com/support/api/methods.aspx)                                          | -                                                                 |
 | Name.com                  | `namedotcom`   | [documentation](https://www.name.com/api-docs/DNS)                                                           | [Go client](https://github.com/namedotcom/go)                     |
 | manual                    | `manual`       | -                                                                                                            | -                                                                 |
+| MyDNS.jp                  | `mydnsjp`      | [documentation](https://www.mydns.jp/?MENU=030)                                                              | -                                                                 |
 | Netcup                    | `netcup`       | [documentation](https://www.netcup-wiki.de/wiki/DNS_API)                                                     | -                                                                 |
 | NIFCloud                  | `nifcloud`     | [documentation](https://mbaas.nifcloud.com/doc/current/rest/common/format.html)                              | -                                                                 |
 | NS1                       | `ns1`          | [documentation](https://ns1.com/api)                                                                         | [Go client](https://github.com/ns1/ns1-go)                        |
@@ -77,8 +122,9 @@ owners to license your work under the terms of the [MIT License](LICENSE).
 | RFC2136                   | `rfc2136`      | [documentation](https://tools.ietf.org/html/rfc2136)                                                         | -                                                                 |
 | Route 53                  | `route53`      | [documentation](https://docs.aws.amazon.com/Route53/latest/APIReference/API_Operations_Amazon_Route_53.html) | [Go client](https://github.com/aws/aws-sdk-go/aws)                |
 | Sakura Cloud              | `sakuracloud`  | [documentation](https://developer.sakura.ad.jp/cloud/api/1.1/)                                               | [Go client](https://github.com/sacloud/libsacloud)                |
-| Selectel                  | `selectel`     | [documentation](https://kb.selectel.com/23136054.html)                                                          | -                                                                 |
+| Selectel                  | `selectel`     | [documentation](https://kb.selectel.com/23136054.html)                                                       | -                                                                 |
 | Stackpath                 | `stackpath`    | [documentation](https://developer.stackpath.com/en/api/dns/#tag/Zone)                                        | -                                                                 |
+| TransIP                   | `transip`      | [documentation](https://api.transip.nl/docs/transip.nl/package-Transip.html)                                 | [Go client](https://github.com/transip/gotransip)                 |
 | VegaDNS                   | `vegadns`      | [documentation](https://github.com/shupp/VegaDNS-API)                                                        | [Go client](https://github.com/OpenDNS/vegadns2client)            |
 | Vultr                     | `vultr`        | [documentation](https://www.vultr.com/api/#dns)                                                              | [Go client](https://github.com/JamesClonk/vultr)                  |
 | Vscale                    | `vscale`       | [documentation](https://developers.vscale.io/documentation/api/v1/#api-Domains_Records)                      | -                                                                 |
