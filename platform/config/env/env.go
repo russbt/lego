@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/go-acme/lego/log"
+	"github.com/go-acme/lego/v3/log"
 )
 
 // Get environment variables
@@ -159,5 +159,5 @@ func GetOrFile(envVar string) string {
 		return ""
 	}
 
-	return string(fileContents)
+	return strings.TrimSuffix(string(fileContents), "\n")
 }
