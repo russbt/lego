@@ -70,9 +70,15 @@ func NewDNSProviderConfig(config *Config) (*DNSProvider, error) {
 	return &DNSProvider{config: config}, nil
 }
 
-// Present creates a TXT record to fulfill the dns-01 challenge.
+// Present gets a TXT record and calls CreateRecord to create it
 func (d *DNSProvider) Present(domain, token, keyAuth string) error {
 	fqdn, value := dns01.GetRecord(domain, keyAuth)
+
+	return d.CreateRecord(fqdn, value)
+}
+
+//	CreateRecord creates a TXT record to fulfill the dns-01 challenge
+func (d *DNSProvider) CreateRecord(fqdn, value string) error {
 	record := dns01.UnFqdn(fqdn)
 
 	u, err := d.buildQuery(cmdAddRecord, record, value)
@@ -87,9 +93,14 @@ func (d *DNSProvider) Present(domain, token, keyAuth string) error {
 	return nil
 }
 
-// CleanUp clears DreamHost TXT record
+// CleanUp gets the DreamHost TXT record and calls RemoveRecord to remove it
 func (d *DNSProvider) CleanUp(domain, token, keyAuth string) error {
 	fqdn, value := dns01.GetRecord(domain, keyAuth)
+	return d.RemoveRecord(fqdn, value)
+}
+
+// RemoveRecord removes the TXT record matching the specified parameters
+func (d *DNSProvider) RemoveRecord(fqdn, value string) error {
 	record := dns01.UnFqdn(fqdn)
 
 	u, err := d.buildQuery(cmdRemoveRecord, record, value)
