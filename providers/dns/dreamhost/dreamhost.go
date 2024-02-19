@@ -72,9 +72,20 @@ func NewDNSProviderConfig(config *Config) (*DNSProvider, error) {
 
 // Present creates a TXT record to fulfill the dns-01 challenge.
 func (d *DNSProvider) Present(domain, token, keyAuth string) error {
+
 	fqdn, value := dns01.GetRecord(domain, keyAuth)
 	record := dns01.UnFqdn(fqdn)
 
+	// Always attempt to remove old record first, since "add" will fail if one already exists
+	u, err := d.buildQuery(cmdRemoveRecord, record, value)
+	if err != nil {
+		return fmt.Errorf("dreamhost: %v", err)
+	}
+
+	// Ignore error since we don't care if record didn't already exists
+	err = d.updateTxtRecord(u)
+
+	// Now add record
 	u, err := d.buildQuery(cmdAddRecord, record, value)
 	if err != nil {
 		return fmt.Errorf("dreamhost: %v", err)
