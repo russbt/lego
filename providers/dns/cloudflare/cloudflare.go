@@ -158,7 +158,7 @@ func (d *DNSProvider) CreateRecord(fqdn, value string) error {
 	d.recordIDs[fqdn] = response.Result.ID
 	d.recordIDsMu.Unlock()
 
-	log.Infof("cloudflare: new record for %s, ID %s", domain, response.Result.ID)
+	log.Infof("cloudflare: new record for %s, ID %s", fqdn, response.Result.ID)
 
 	return nil
 }
