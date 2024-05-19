@@ -155,7 +155,7 @@ func (d *DNSProvider) CreateRecord(fqdn, value string) error {
 	}
 
 	d.recordIDsMu.Lock()
-	d.recordIDs[token] = response.Result.ID
+	d.recordIDs[fqdn] = response.Result.ID
 	d.recordIDsMu.Unlock()
 
 	log.Infof("cloudflare: new record for %s, ID %s", domain, response.Result.ID)
@@ -184,7 +184,7 @@ func (d *DNSProvider) RemoveRecord(fqdn, value string) error {
 
 	// get the record's unique ID from when we created it
 	d.recordIDsMu.Lock()
-	recordID, ok := d.recordIDs[token]
+	recordID, ok := d.recordIDs[fqdn]
 	d.recordIDsMu.Unlock()
 	if !ok {
 		return fmt.Errorf("cloudflare: unknown record ID for '%s'", fqdn)
@@ -197,7 +197,7 @@ func (d *DNSProvider) RemoveRecord(fqdn, value string) error {
 
 	// Delete record ID from map
 	d.recordIDsMu.Lock()
-	delete(d.recordIDs, token)
+	delete(d.recordIDs, fqdn)
 	d.recordIDsMu.Unlock()
 
 	return nil
